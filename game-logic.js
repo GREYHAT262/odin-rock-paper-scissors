@@ -22,37 +22,51 @@ function getHumanChoice() {
     return choice;
 }
 
-function playRound(humanChoice, computerChoice) {
-    // Make humanChoice case-insensitive
-    humanChoice = humanChoice[0].toUpperCase() + humanChoice.substring(1).toLowerCase();
-    let choiceCombi = humanChoice.concat(" ", computerChoice);
+function playGame() {
+    function playRound(humanChoice, computerChoice) {
+        // Make humanChoice case-insensitive
+        humanChoice = humanChoice[0].toUpperCase() + humanChoice.substring(1).toLowerCase();
+        let choiceCombi = humanChoice.concat(" ", computerChoice);
 
-    // Determine winner
-    switch (choiceCombi) {
-        case "Rock Rock":
-        case "Paper Paper":
-        case "Scissors Scissors":
-            console.log("It's a tie!");
-            break;
-        case "Rock Paper":
-        case "Paper Scissors":
-        case "Scissors Rock":
-            console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-            computerScore++;
-            break;
-        case "Rock Scissors":
-        case "Paper Rock":
-        case "Scissors Paper":
-            console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-            humanScore++;
-            break;
+        // Determine winner of round
+        switch (choiceCombi) {
+            case "Rock Rock":
+            case "Paper Paper":
+            case "Scissors Scissors":
+                console.log("It's a tie!");
+                break;
+            case "Rock Paper":
+            case "Paper Scissors":
+            case "Scissors Rock":
+                console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+                computerScore++;
+                break;
+            case "Rock Scissors":
+            case "Paper Rock":
+            case "Scissors Paper":
+                console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+                humanScore++;
+                break;
+        }
+    }
+
+    // Initialize scores to 0
+    let humanScore = 0;
+    let computerScore = 0;
+
+    // Play 5 rounds
+    for (let i = 0; i < 5; i++) {
+        playRound(getHumanChoice(), getComputerChoice());
+    }
+
+    // Declare winner of game
+    if (humanScore > computerScore) {
+        console.log("Congratulations! You win!");
+    } else if (humanScore < computerScore) {
+        console.log("You lose! Better luck next time!");
+    } else {
+        console.log("It's a tie! Try again!");
     }
 }
 
-let humanScore = 0;
-let computerScore = 0;
-
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-playRound(humanSelection, computerSelection);
+playGame();
