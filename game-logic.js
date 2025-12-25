@@ -8,11 +8,11 @@ function getComputerChoice() {
     */
     switch (num) {
         case 0:
-            return "rock";
+            return "Rock";
         case 1:
-            return "paper";
+            return "Paper";
         case 2:
-            return "scissors";
+            return "Scissors";
     }
 }
 
@@ -22,5 +22,37 @@ function getHumanChoice() {
     return choice;
 }
 
+function playRound(humanChoice, computerChoice) {
+    // Make humanChoice case-insensitive
+    humanChoice = humanChoice[0].toUpperCase() + humanChoice.substring(1).toLowerCase();
+    let choiceCombi = humanChoice.concat(" ", computerChoice);
+
+    // Determine winner
+    switch (choiceCombi) {
+        case "Rock Rock":
+        case "Paper Paper":
+        case "Scissors Scissors":
+            console.log("It's a tie!");
+            break;
+        case "Rock Paper":
+        case "Paper Scissors":
+        case "Scissors Rock":
+            console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+            computerScore++;
+            break;
+        case "Rock Scissors":
+        case "Paper Rock":
+        case "Scissors Paper":
+            console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+            humanScore++;
+            break;
+    }
+}
+
 let humanScore = 0;
 let computerScore = 0;
+
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+
+playRound(humanSelection, computerSelection);
