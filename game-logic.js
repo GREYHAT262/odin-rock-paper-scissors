@@ -54,19 +54,18 @@ function playGame() {
     let humanScore = 0;
     let computerScore = 0;
 
-    // Play 5 rounds
-    for (let i = 0; i < 5; i++) {
-        playRound(getHumanChoice(), getComputerChoice());
-    }
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => button.addEventListener('click', 
+        () => playRound(button.className, getComputerChoice())));
 
     // Declare winner of game
-    if (humanScore > computerScore) {
+    /* if (humanScore > computerScore) {
         console.log("Congratulations! You win!");
     } else if (humanScore < computerScore) {
         console.log("You lose! Better luck next time!");
     } else {
         console.log("It's a tie! Try again!");
-    }
+    } */
 }
 
 playGame();
