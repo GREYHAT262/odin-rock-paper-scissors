@@ -28,23 +28,26 @@ function playGame() {
         humanChoice = humanChoice[0].toUpperCase() + humanChoice.substring(1).toLowerCase();
         let choiceCombi = humanChoice.concat(" ", computerChoice);
 
+        // Access div element to display results
+        const result = document.querySelector('div');
+
         // Determine winner of round
         switch (choiceCombi) {
             case "Rock Rock":
             case "Paper Paper":
             case "Scissors Scissors":
-                console.log("It's a tie!");
+                result.textContent = "It's a tie!";
                 break;
             case "Rock Paper":
             case "Paper Scissors":
             case "Scissors Rock":
-                console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+                result.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
                 computerScore++;
                 break;
             case "Rock Scissors":
             case "Paper Rock":
             case "Scissors Paper":
-                console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+                result.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
                 humanScore++;
                 break;
         }
@@ -54,6 +57,7 @@ function playGame() {
     let humanScore = 0;
     let computerScore = 0;
 
+    // Add event listener to each button to call playRound with correct player choice
     const buttons = document.querySelectorAll('button');
     buttons.forEach(button => button.addEventListener('click', 
         () => playRound(button.className, getComputerChoice())));
