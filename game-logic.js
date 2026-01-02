@@ -16,20 +16,18 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    // Prompt user for input
-    let choice = prompt("Rock, paper or scissors?");
-    return choice;
-}
-
 function playGame() {
-    function playRound(humanChoice, computerChoice) {
+    function playRound(e) {
+        // Get choices
+        let humanChoice = e.target.className;
+        let computerChoice = getComputerChoice();
+
         // Make humanChoice case-insensitive
         humanChoice = humanChoice[0].toUpperCase() + humanChoice.substring(1).toLowerCase();
         let choiceCombi = humanChoice.concat(" ", computerChoice);
 
         // Access div element to display results
-        const result = document.querySelector('div');
+        const result = document.querySelector('.round-result');
 
         // Determine winner of round
         switch (choiceCombi) {
@@ -51,6 +49,21 @@ function playGame() {
                 humanScore++;
                 break;
         }
+
+        // Display running score
+        const scoreboard = document.querySelector('.scoreboard');
+        scoreboard.textContent = `You: ${humanScore}, Opponent: ${computerScore}`;
+
+        // Declare winner of game and end game
+        const outcome = document.querySelector('.game-result');
+
+        if (humanScore == 5) {
+            outcome.textContent = "Congratulations! You win!";
+            buttons.forEach(button => button.removeEventListener('click', playRound));
+        } else if (computerScore == 5) {
+            outcome.textContent = "You lose! Better luck next time!";
+            buttons.forEach(button => button.removeEventListener('click', playRound));
+        }
     }
 
     // Initialize scores to 0
@@ -59,17 +72,7 @@ function playGame() {
 
     // Add event listener to each button to call playRound with correct player choice
     const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => button.addEventListener('click', 
-        () => playRound(button.className, getComputerChoice())));
-
-    // Declare winner of game
-    /* if (humanScore > computerScore) {
-        console.log("Congratulations! You win!");
-    } else if (humanScore < computerScore) {
-        console.log("You lose! Better luck next time!");
-    } else {
-        console.log("It's a tie! Try again!");
-    } */
+    buttons.forEach(button => button.addEventListener('click', playRound));
 }
 
 playGame();
